@@ -137,7 +137,7 @@ app.post('/api/upload-by-link', async (req, res) => {
   });
   console.log('AAAAAAAAAAAAAAAAAAAAAAa', link);
   const result = await cloudinary.v2.uploader.upload(link,
-    { public_id: "olympic_flag" },
+    { public_id: newName },
   );
   console.log('11111111111111', result.url);
   // const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
