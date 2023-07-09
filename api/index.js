@@ -139,9 +139,9 @@ app.post('/api/upload-by-link', async (req, res) => {
   const result = await cloudinary.v2.uploader.upload(link,
     { public_id: "olympic_flag" },
   );
-  console.log('11111111111111', result);
+  console.log('11111111111111', result.url);
   // const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
-  res.json(result);
+  res.json(result.url);
 });
 
 const photosMiddleware = multer({ dest: '/tmp' });
