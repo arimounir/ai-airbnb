@@ -25,8 +25,14 @@ app.use(cookieParser());
 app.use('/uploads', express.static(__dirname + '/uploads'));
 app.use(cors({
   credentials: true,
-  origin: 'https://ai-airbnb.vercel.app',
+  origin: '*',
 }));
+
+cloudinary.config({
+  cloud_name: 'djlmtk4vg',
+  api_key: '763273769974698',
+  api_secret: process.env.CLOUDINARY_API_SECRET
+});
 
 async function uploadToS3(path, originalFilename, mimetype) {
   const client = new S3Client({
@@ -128,8 +134,13 @@ app.post('/api/upload-by-link', async (req, res) => {
     url: link,
     dest: '/tmp/' + newName,
   });
-  const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
-  res.json(url);
+  console.log('AAAAAAAAAAAAAAAAAAAAAAa', link);
+  const result = await cloudinary.v2.uploader.upload(link,
+    { public_id: "olympic_flag" },
+  );
+  console.log('11111111111111', result);
+  // const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
+  res.json(result);
 });
 
 const photosMiddleware = multer({ dest: '/tmp' });
