@@ -7,9 +7,6 @@ export default function PhotosUploader({ addedPhotos, onChange }) {
   async function addPhotoByLink(ev) {
     ev.preventDefault();
     const { data: filename } = await axios.post('/upload-by-link', { link: photoLink });
-    console.log('111111111', photoLink);
-    console.log('333333', filename);
-    console.log('2222222', data);
     onChange(prev => {
       return [...prev, filename];
     });

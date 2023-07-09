@@ -139,7 +139,7 @@ app.post('/api/upload-by-link', async (req, res) => {
     { public_id: newName },
   );
   // const url = await uploadToS3('/tmp/' + newName, newName, mime.lookup('/tmp/' + newName));
-  res.json(result.url);
+  res.json(result.secure_url);
 });
 
 const photosMiddleware = multer({ dest: '/tmp' });
@@ -147,8 +147,11 @@ app.post('/api/upload', photosMiddleware.array('photos', 100), async (req, res) 
   const uploadedFiles = [];
   for (let i = 0; i < req.files.length; i++) {
     const { path, originalname, mimetype } = req.files[i];
-    const url = await uploadToS3(path, originalname, mimetype);
-    uploadedFiles.push(url);
+    // const url = await uploadToS3(path, originalname, mimetype);
+    const result = await cloudinary.v2.uploader.upload(path,
+      { public_id: originalname },
+    );
+    uploadedFiles.push(result.secure_url);
   }
   res.json(uploadedFiles);
 });
