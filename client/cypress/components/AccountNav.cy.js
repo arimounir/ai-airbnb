@@ -1,15 +1,9 @@
 import React from "react";
 import AccountNav from "../../src/AccountNav";
 
-const author = {
-  name: "Test Author",
-  picture: {
-    url: "https://via.placeholder.com/200",
-  },
-};
 describe("AuthorCard component", () => {
   beforeEach(() => {
-    cy.mount(<AccountNav {...author} />);
+    cy.mount(<AccountNav />);
     cy.viewport(1920, 1080);
   });
 
