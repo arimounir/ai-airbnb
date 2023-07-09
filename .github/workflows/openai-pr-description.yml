@@ -9,5 +9,5 @@ jobs:
     steps:
       - uses: platisd/openai-pr-description@master
         with:
-          GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
-          OPENAI_API_KEY: ${{ secrets.OPENAI_TOKEN }}
+          github_token: ${{ secrets.GITH_TOKEN }}
+          openai_api_key: ${{ secrets.OPENAI_TOKEN }}
