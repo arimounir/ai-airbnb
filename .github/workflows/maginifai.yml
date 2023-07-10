@@ -9,9 +9,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: API request
+        id: magifaiReq
         uses: fjogeleit/http-request-action@v1
         with:
           url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
           method: "GET"
           bearerToken: ${{secrets.MAGNIFAI_TOKEN}}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+      - name: API response
+        run: |
+          echo ${{ steps.myRequest.outputs.response }}
+          echo ${{ steps.myRequest.outputs.headers }}
+          echo ${{ fromJson(steps.myRequest.outputs.response).field_you_want_to_access }}
