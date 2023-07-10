@@ -45,7 +45,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
           message: |
             ## Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
-            ---
+            https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}}
             ### Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
 
             | Orioginal Image  | Tested Image |
