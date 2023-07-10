@@ -29,6 +29,14 @@ jobs:
           echo ${{ steps.magifaiReq.outputs.response }}
           echo ${{ steps.magifaiReq.outputs.headers }}
           echo ${{ fromJson(steps.magifaiReq.outputs.response).status }}
+      - name: API request
+        id: magnifaiImgreq
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
+          method: "GET"
+          bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
+          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
       - name: Checkout
         uses: actions/checkout@v3
       - name: PR comment with reactions
@@ -36,5 +44,7 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
           message: |
-            ### Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
-            #Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
+            ## Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
+            ---
+            ### Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
+            ![Screenshot of a comment on a GitHub issue showing an image, added in the Markdown, of an Octocat smiling and raising a tentacle.](https://42i.magnifai.es/aut-dashboard-api/assets/${{fromJson(steps.magifaiReq.outputs.response).inputImage}})
