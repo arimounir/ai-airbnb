@@ -20,4 +20,16 @@ jobs:
         run: |
           echo ${{ steps.magifaiReq.outputs.response }}
           echo ${{ steps.magifaiReq.outputs.headers }}
-          echo ${{ fromJson(steps.magifaiReq.outputs.response) }}
+          echo MF_RES=${{ fromJson(steps.magifaiReq.outputs.response) }} >> $GITHUB_OUTPUT
+  example_comment_pr:
+    runs-on: ubuntu-latest
+    name: An example job to comment a PR
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Comment PR
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          message: |
+            ${{ steps.magifaiReq.outputs.MF_RES }}
