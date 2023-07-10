@@ -20,11 +20,11 @@ jobs:
         run: |
           echo ${{ steps.magifaiReq.outputs.response }}
           echo ${{ steps.magifaiReq.outputs.headers }}
-          echo ${{ fromJson(steps.magifaiReq.outputs.response) }}
+          echo ${{ fromJson(steps.magifaiReq.outputs.response).status }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            ${{ fromJson(steps.magifaiReq.outputs.response) }}
+            ${{ fromJson(steps.magifaiReq.outputs.response).status }}
