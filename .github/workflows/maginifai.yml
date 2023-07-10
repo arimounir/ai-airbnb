@@ -8,13 +8,20 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
+      - name: Auth request
+        id: authReq
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://42i.magnifai.es/realms/aut/protocol/openid-connect/token"
+          method: "GET"
+          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded", "client_id": "aut-sdk", "grant_type":"password", "username":"${{secrets.MAGNIFAI_USER}}", "password":"${{secrets.MAGNIFAI_PWD}}"}'
       - name: API request
         id: magifaiReq
         uses: fjogeleit/http-request-action@v1
         with:
           url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
           method: "GET"
-          bearerToken: ${{secrets.MAGNIFAI_TOKEN}}
+          bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
       - name: API response
         run: |
@@ -28,5 +35,5 @@ jobs:
         with:
           GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
           message: |
-            Hello world ! :wave:
-          reactions: eyes, rocket
+            ### Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
+            #Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
