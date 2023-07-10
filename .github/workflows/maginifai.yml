@@ -33,10 +33,12 @@ jobs:
         id: magnifaiImgreq
         uses: fjogeleit/http-request-action@v1
         with:
-          url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
+          url: "https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}}"
           method: "GET"
           bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
-          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+      - name: Image response
+        run: |
+          echo ${{ steps.magnifaiImgreq.outputs.response }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: PR comment with reactions
@@ -45,7 +47,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
           message: |
             ## Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
-            https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}}
+
             ### Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
 
             | Orioginal Image  | Tested Image |
