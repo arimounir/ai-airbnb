@@ -29,16 +29,6 @@ jobs:
           echo ${{ steps.magifaiReq.outputs.response }}
           echo ${{ steps.magifaiReq.outputs.headers }}
           echo ${{ fromJson(steps.magifaiReq.outputs.response).compare.inputImage }}
-      - name: Image request
-        id: magnifaiImgreq
-        uses: fjogeleit/http-request-action@v1
-        with:
-          url: "https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}}"
-          method: "GET"
-          bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
-      - name: Image response
-        run: |
-          echo ${{ steps.magnifaiImgreq.outputs.response }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: PR comment with reactions
