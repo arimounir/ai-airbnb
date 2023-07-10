@@ -20,11 +20,11 @@ jobs:
         run: |
           echo ${{ steps.magifaiReq.outputs.response }}
           echo ${{ steps.magifaiReq.outputs.headers }}
-          echo MF_RES=${{ fromJson(steps.magifaiReq.outputs.response) }} >> $GITHUB_OUTPUT
+          echo ${{ fromJson(steps.magifaiReq.outputs.response) }}
       - name: Checkout
         uses: actions/checkout@v3
       - name: Comment PR
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            ${{ steps.magifaiReq.outputs.MF_RES }}
+            ${{ fromJson(steps.magifaiReq.outputs.response) }}
