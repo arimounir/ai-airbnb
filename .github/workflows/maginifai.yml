@@ -14,11 +14,7 @@ jobs:
         with:
           url: "https://42i.magnifai.es/realms/aut/protocol/openid-connect/token"
           method: "POST"
-          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded", "client_id": "aut-sdk", "grant_type": "password", "username": "${{secrets.MAGNIFAI_USER}}", "password": "${{secrets.MAGNIFAI_PWD}}"}'
-      - name: Auth request
-        run: |
-          echo ${{ steps.authReq.outputs.request }}
-          echo ${{ steps.authReq.outputs.headers }}
+          data: '{"Content-Type": "application/x-www-form-urlencoded", "client_id": "aut-sdk", "grant_type": "password", "username": "${{secrets.MAGNIFAI_USER}}", "password": "${{secrets.MAGNIFAI_PWD}}"}'
       - name: API request
         id: magifaiReq
         uses: fjogeleit/http-request-action@v1
