@@ -27,4 +27,4 @@ jobs:
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            ${{ fromJson(steps.magifaiReq.outputs.response).status }}
+            Hello world
