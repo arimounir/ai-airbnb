@@ -23,8 +23,9 @@ jobs:
           echo ${{ fromJson(steps.magifaiReq.outputs.response).status }}
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Comment PR
+      - name: PR comment with reactions
         uses: thollander/actions-comment-pull-request@v2
         with:
           message: |
-            Hello world
+            Hello world ! :wave:
+          reactions: eyes, rocket
