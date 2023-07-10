@@ -1,4 +1,4 @@
-name: Cypress Tests
+name: Magnifai Request
 
 on:
   pull_request:
@@ -8,7 +8,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Deploy Stage
+      - name: API request
         uses: fjogeleit/http-request-action@v1
         with:
           url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
