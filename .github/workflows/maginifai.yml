@@ -1,0 +1,53 @@
+name: Magnifai Request
+
+on:
+  pull_request:
+    types: [opened, reopened, synchronize, edited, labeled]
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Auth request
+        id: authReq
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://42i.magnifai.es/realms/aut/protocol/openid-connect/token"
+          method: "POST"
+          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+          data: '{"client_id": "aut-sdk", "grant_type": "password", "username": "${{secrets.MAGNIFAI_USER}}", "password": "${{secrets.MAGNIFAI_PWD}}"}'
+      - name: API request
+        id: magifaiReq
+        uses: fjogeleit/http-request-action@v1
+        with:
+          url: "https://42i.magnifai.es/aut-dashboard-api/results/64ab697d153fb55fb4caa174"
+          method: "GET"
+          bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
+          customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+      - name: Checkout
+        uses: actions/checkout@v3
+      - run: "mkdir artifacts"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}} -O artifacts/image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}} -O artifacts/image2.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}} -O artifacts/heatmap.png"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: magnifai-images
+          path: ./artifacts
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: PR comment with reactions
+        uses: thollander/actions-comment-pull-request@v2
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITH_TOKEN }}
+          message: |
+            ## Test result: ${{ fromJson(steps.magifaiReq.outputs.response).status }}
+
+            ### Test name: ${{ fromJson(steps.magifaiReq.outputs.response).name }}
+
+            | Orioginal Image  | Tested Image |
+            | ------------- | ------------- |
+            | [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}})  | [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}}) |
+
+            ### Comparison Heatmap:
+            [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}})
