@@ -27,26 +27,12 @@ jobs:
       - name: API request
         uses: actions/checkout@v3
       - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}} -O image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}} -O image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}} -O image.png"
       - uses: actions/upload-artifact@v3
         with:
-          name: my-artifact
-          path: image.png
-      - uses: actions/checkout@v3
-
-      - uses: actions/download-artifact@v3
-        id: download
-        with:
-          name: my-artifact
-          path: image.png
-
-      - name: "Echo download path"
-        run: echo ${{steps.download.outputs.download-path}}
-
-      - name: API response
-        run: |
-          echo ${{ steps.magifaiReq.outputs.response }}
-          echo ${{ steps.magifaiReq.outputs.headers }}
-          echo ${{ fromJson(steps.magifaiReq.outputs.response).compare.inputImage }}
+          name: magifai-images
+          path: ./
       - name: Checkout
         uses: actions/checkout@v3
       - name: PR comment with reactions
@@ -64,4 +50,3 @@ jobs:
 
             ### Comparison Heatmap:
             [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}})
-            ![Link](${{steps.download.outputs.download-path}})
