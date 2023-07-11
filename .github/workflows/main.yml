@@ -28,3 +28,10 @@ jobs:
           component: true
         env:
           CYPRESS_BASE_URL: https://ai-airbnb.vercel.app
+      - name: Run Component Testing
+        uses: actions/upload-artifact@v3
+        # if: failure()
+        with:
+          name: cypress-screenshots
+          path: cypress/screenshots
+          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
