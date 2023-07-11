@@ -28,7 +28,7 @@ const options = () => {
   };
 };
 
-describe("AuthorCard component", () => {
+describe("AccountNav component", () => {
   beforeEach(() => {
     const { routerProps = { initialEntries: ["/"] }, ...mountOptions } =
       options;
