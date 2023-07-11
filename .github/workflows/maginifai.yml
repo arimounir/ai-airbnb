@@ -24,6 +24,13 @@ jobs:
           method: "GET"
           bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
+      - name: API request
+        uses: actions/checkout@v3
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}'' -O image.png"
+      - uses: actions/upload-artifact@v3
+        with:
+          name: my-artifact
+          path: image.png
       - name: API response
         run: |
           echo ${{ steps.magifaiReq.outputs.response }}
@@ -42,7 +49,7 @@ jobs:
 
             | Orioginal Image  | Tested Image |
             | ------------- | ------------- |
-            | [Original Image](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}})  | ![Tested Image](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}}) |
+            | [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}})  | [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}}) |
 
             ### Comparison Heatmap:
-            [Original Image](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}})
+            [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}})
