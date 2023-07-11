@@ -27,9 +27,9 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v3
       - run: "mkdir artifacts"
-      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}} -O image.png"
-      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}} -O image.png"
-      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}} -O image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.baselineImage}} -O artifacts/image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.inputImage}} -O artifacts/image2.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}} -O artifacts/heatmap.png"
       - uses: actions/upload-artifact@v3
         with:
           name: magnifai-images
