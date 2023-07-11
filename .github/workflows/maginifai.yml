@@ -26,7 +26,7 @@ jobs:
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
       - name: API request
         uses: actions/checkout@v3
-      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}'' -O image.png"
+      - run: "wget --header 'authorization: Bearer ${{ fromJson(steps.authReq.outputs.response).access_token }}' -O image.png"
       - uses: actions/upload-artifact@v3
         with:
           name: my-artifact
