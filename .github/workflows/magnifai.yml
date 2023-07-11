@@ -8,9 +8,6 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - name: Logging
-        run: |
-          echo "${{toJSON(github.event)}}"
       - name: Auth request
         id: authReq
         uses: fjogeleit/http-request-action@v1

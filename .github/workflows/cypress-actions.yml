@@ -26,10 +26,3 @@ jobs:
           component: true
         env:
           CYPRESS_BASE_URL: https://ai-airbnb.vercel.app
-      - name: Store screenchots as artifacts
-        uses: actions/upload-artifact@v3
-        # if: failure()
-        with:
-          name: cypress-screenshots
-          path: ./client/cypress/screenshots
-          if-no-files-found: ignore # 'warn' or 'error' are also available, defaults to `warn`
