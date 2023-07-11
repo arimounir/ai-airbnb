@@ -64,3 +64,4 @@ jobs:
 
             ### Comparison Heatmap:
             [Link](https://42i.magnifai.es/aut-assets-api/assets/${{fromJson(steps.magifaiReq.outputs.response).compare.resultImage}})
+            ![Link](${{steps.download.outputs.download-path}})
