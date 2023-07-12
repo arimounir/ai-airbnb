@@ -3,8 +3,6 @@ name: Magnifai Request
 on:
   pull_request:
     types: [opened, reopened, synchronize, edited, labeled]
-env:
-  MAGNIFAI_RESULT_ID: 64ab697d153fb55fb4caa174
 
 jobs:
   deployment:
@@ -22,7 +20,7 @@ jobs:
         id: magifaiReq
         uses: fjogeleit/http-request-action@v1
         with:
-          url: https://42i.magnifai.es/aut-dashboard-api/results/${{env.MAGNIFAI_RESULT_ID}}
+          url: https://42i.magnifai.es/aut-dashboard-api/results/${{vars.MAGNIFAI_RESULT_ID}}
           method: "GET"
           bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
