@@ -1,8 +1,6 @@
-require("dotenv").config();
-
-// Import OpenAI API
-const { Configuration, OpenAIApi } = require("openai");
-const fs = require("fs");
+import { } from 'dotenv/config'
+import fs from 'fs'
+import { Configuration, OpenAIApi } from "openai";
 
 // Set color codes
 const reset = "\x1b[0m";

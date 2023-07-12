@@ -1,0 +1,8 @@
+{
+  "fileName": "post",
+  "steps": [
+    "go to localhost:3000",
+    "click on first post",
+    "url should contains posts"
+  ]
+}
