@@ -10,7 +10,7 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - run: "echo ${{ github.event.head_commit.message }}"
+      - run: "echo $MAGNIFAI_RESULT_ID"
       - name: Auth request
         id: authReq
         uses: fjogeleit/http-request-action@v1
