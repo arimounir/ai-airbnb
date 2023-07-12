@@ -29,6 +29,7 @@ app.use(cors({
   origin: process.env.CORS_VALUE,
 }));
 
+
 cloudinary.config({
   cloud_name: 'djlmtk4vg',
   api_key: '763273769974698',
