@@ -3,6 +3,8 @@ name: Magnifai Request
 on:
   pull_request:
     types: [opened, reopened, synchronize, edited, labeled]
+env:
+  MAGNIFAI_RESULT_ID:
 
 jobs:
   deployment:
