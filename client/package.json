@@ -11,13 +11,20 @@
     "e2e": "cypress open --e2e",
     "e2e:headless": "cypress run --e2e",
     "component": "cypress open --component",
-    "component:headless": "cypress run --component"
+    "component:headless": "cypress run --component",
+    "cypress-generator": "node ./cypress/ai/component-tests.js",
+    "review": "node openai.js"
   },
   "dependencies": {
+    "@fortawesome/fontawesome-svg-core": "^6.4.0",
+    "@fortawesome/free-regular-svg-icons": "^6.4.0",
+    "@fortawesome/free-solid-svg-icons": "^6.4.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "autoprefixer": "^10.4.13",
     "axios": "^1.2.2",
     "cypress": "^12.17.0",
     "date-fns": "^2.29.3",
+    "dotenv": "^16.3.1",
     "openai": "^3.3.0",
     "postcss": "^8.4.21",
     "react": "^18.2.0",
