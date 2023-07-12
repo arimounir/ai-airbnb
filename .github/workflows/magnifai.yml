@@ -10,7 +10,6 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
-      - run: "echo $MAGNIFAI_RESULT_ID"
       - name: Auth request
         id: authReq
         uses: fjogeleit/http-request-action@v1
@@ -23,7 +22,7 @@ jobs:
         id: magifaiReq
         uses: fjogeleit/http-request-action@v1
         with:
-          url: ${{env.MAGNIFAI_RESULT_ID}}
+          url: https://42i.magnifai.es/aut-dashboard-api/results/${{env.MAGNIFAI_RESULT_ID}}
           method: "GET"
           bearerToken: ${{ fromJson(steps.authReq.outputs.response).access_token }}
           customHeaders: '{"Content-Type": "application/x-www-form-urlencoded"}'
